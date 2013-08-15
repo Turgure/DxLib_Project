@@ -1,10 +1,10 @@
 #pragma once
 #include "DxLib.h"
+#include "BaseScene.h"
 //#include "Debug.h"
 //#include "Graphics.h"
+#include "Input.h"
 #include "Sound.h"
-#include "BaseScene.h"
-//#include "Input.h"
 //#include "GV.h"
 
 bool BaseScene::running;
@@ -30,8 +30,9 @@ BaseScene* BaseScene::main() {
 	// ƒƒCƒ“ƒ‹[ƒv
 	while(looping){
 		//Graphics->update();
-		//Input::update();
-		Sound::update();
+		Input::getInstance().update();
+		Sound::getInstance().update();
+
 		if( ProcessMessage() == 0 ){
 			if(Graphics->isTransFinished() && callbackState == READY){
 				try{

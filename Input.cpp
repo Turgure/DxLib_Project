@@ -1,9 +1,6 @@
 #include "DxLib.h"
 #include "Input.h"
 
-int Input::key[256];
-int Input::prevkey[256];
-
 void Input::initialize(){
 	for(int i = 0; i < 256; i++){
 		key[i] = 0;
