@@ -8,7 +8,7 @@ public:
 	}
 
 	void initialize();
-	int update();
+	void update();
 
 	bool pushed(int keyID, bool judge_once = true);
 	bool pushing(int keyID);

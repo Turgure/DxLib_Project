@@ -8,7 +8,7 @@ void Input::initialize(){
 	}
 }
 
-int Input::update(){
+void Input::update(){
 	char tmpKey[256];
 	GetHitKeyStateAll(tmpKey);
 	for(int i = 0; i < 256; i++){
@@ -20,10 +20,9 @@ int Input::update(){
 			key[i] = 0;
 		}
 	}
-	return 0;
 }
 
-bool Input::pushed(int keyID, bool judge_once = true){
+bool Input::pushed(int keyID, bool judge_once){
 	if(prevkey[keyID] == 0 && key[keyID] == 1){
 		if(judge_once) key[keyID] = INT_MIN;
 		return true;

@@ -42,8 +42,8 @@ public:
 
 private:
 	Sound(){}
-	void loadBGMTable();
-	void loadSETable();
+	void loadBGMTable(){}	//TODO:
+	void loadSETable(){}	//TODO:
 	
 	std::vector<BGMData> bgmTable;
 	std::vector<SEData> seTable;
