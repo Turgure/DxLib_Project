@@ -29,8 +29,8 @@ class Object;
 class UniqueGraphicManager{
 public:
 	static UniqueGraphicManager& getInstance(){
-		static UniqueGraphicManager g_mng;
-		return g_mng;
+		static UniqueGraphicManager instance;
+		return instance;
 	}
 
 	enum GraphicType{
@@ -63,11 +63,18 @@ private:
 
 class GraphicManager{
 public:
+	static GraphicManager& getInstance(){
+		static GraphicManager instance;
+		return instance;
+	}
+
 	void resister(std::shared_ptr<Object> obj);
 	void update();
 	void draw();
 
 private:
+	GraphicManager(){}
+
 	//list<map<int id, Vector2 pos>>
 	std::list<std::shared_ptr<Object>> graphics;
 };

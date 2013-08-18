@@ -1,4 +1,5 @@
 #pragma once
+#include "Graphic.h"
 
 /* 
  * シーン基底クラス
@@ -12,8 +13,8 @@ public:
 	virtual ~BaseScene(){}
 	
 protected:
-	virtual void update(){}    ///< @brief フレーム更新
 	virtual void start(){}     ///< @brief 起動処理
+	virtual void update(){}    ///< @brief フレーム更新
 	virtual void terminate(){} ///< @brief 終了処理
 	void setNextScene(BaseScene* scene);
 
@@ -33,7 +34,7 @@ private:
  * シーン管理クラス
  * シーンの遷移と実行を管理するクラス
  */
-class SceneManager {
+class SceneManager{
 public:
 	static void run(BaseScene* starter = nullptr);
 

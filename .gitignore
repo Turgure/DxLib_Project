@@ -39,6 +39,9 @@ local.properties
 #Debug
 Debug/
 
+#Log
+Log.txt
+
 # User-specific files
 *.suo
 *.user

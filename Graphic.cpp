@@ -57,4 +57,5 @@ void GraphicManager::draw(){
 			}
 		}
 	}
+	ScreenFlip();
 }
