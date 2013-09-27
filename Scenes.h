@@ -2,7 +2,7 @@
 #include <vector>
 #include <memory>
 #include "BaseScene.h"
-#include "Object.h"
+#include "Mover.h"
 
 class SceneA : public BaseScene{
 	void start() override;
@@ -12,6 +12,8 @@ class SceneA : public BaseScene{
 	//vector<vector<shared_ptr<Object>>> enemies;
 	std::vector<std::shared_ptr<CharaA>> cas;
 	std::vector<std::shared_ptr<CharaB>> cbs;
+
+	Mover mover;
 };
 
 class SceneB : public BaseScene{

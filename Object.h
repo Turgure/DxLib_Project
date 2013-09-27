@@ -4,7 +4,7 @@
 
 class Object{
 public:
-	Object(Vector2 pos, Graphic g):position(pos), graphic(g){}
+	Object(Vector2 position, Graphic graphic):position(position), graphic(graphic){}
 	virtual ~Object(){}
 	virtual void update(){}
 	//int getGraphicId(){ return graphicId; }
@@ -17,14 +17,14 @@ protected:
 
 class CharaA : public Object{
 public:
-	CharaA(Vector2 pos, Graphic g);
+	CharaA(Vector2 position, Graphic graphic);
 
 	void update() override;
 };
 
 class CharaB : public Object{
 public:
-	CharaB(Vector2 pos, Graphic g);
+	CharaB(Vector2 position, Graphic graphic);
 
 	void update() override;
 };

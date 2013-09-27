@@ -5,11 +5,16 @@
 #include <vector>
 #include <unordered_map>
 #include <memory>
+#include "Component.h"
 #include "Vector2.h"
 
 typedef int graphic_handle;
 
-class UniqueGraphic{
+/* 
+ * グラフィック登録クラス
+ * 登録時のみに使用
+ */
+class UniqueGraphic : public Component{
 public:
 	UniqueGraphic(graphic_handle handle, int Zbuffer);
 	UniqueGraphic(){}
@@ -25,6 +30,10 @@ protected:
 	int Zbuffer;
 };
 
+/*
+ * グラフィック管理クラス
+ * グラフィック一覧を配列で管理
+ */
 class Object;
 class UniqueGraphicManager{
 public:
@@ -59,8 +68,17 @@ private:
 	std::vector<UniqueGraphic> uniqueGraphics;
 };
 
+/*
+ * グラフィッククラス
+ * UniqueGraphicと同じ機能
+ */
 //class Graphic : public UniqueGraphic{};
 
+/*
+ * 画像管理クラス
+ * 複数の同一画像も扱う
+ * 更新、描写を行う
+ */
 class GraphicManager{
 public:
 	static GraphicManager& getInstance(){
