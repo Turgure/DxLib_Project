@@ -51,6 +51,9 @@ bool BaseScene::processLoop(){
 	if(ProcessMessage() != 0)  return false;	//プロセス処理がエラーのとき
 	if(ClearDrawScreen() != 0) return false;	//画面クリア処理がエラーのとき
 	clsDx();
+
+	if(CheckHitKey(KEY_INPUT_ESCAPE)) return false;	//ESCキーを押したら終了
+
 	return true;
 }
 
