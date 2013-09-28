@@ -16,18 +16,21 @@ typedef int graphic_handle;
  */
 class UniqueGraphic : public Component{
 public:
-	UniqueGraphic(graphic_handle handle, int Zbuffer);
+	UniqueGraphic(graphic_handle handle, int Zindex);
 	UniqueGraphic(){}
 	virtual ~UniqueGraphic(){}
 
 	int getId(){ return id; }
 	graphic_handle getHandle(){ return handle; }
-	int getZbuffer(){ return Zbuffer; }
-
+	int getZindex(){ return Zindex; }
+	virtual const std::string getKeyString() const {
+		static std::string key = "Graphic";
+		return key;
+	}
 protected:
 	int id;
 	graphic_handle handle;
-	int Zbuffer;
+	int Zindex;
 };
 
 /*
@@ -49,21 +52,21 @@ public:
 		BULLET,
 	};
 
-	int getMaxZbuffer();
+	int getMaxZindex();
 
 	UniqueGraphic getUniqueGraphic(GraphicType type){ return uniqueGraphics[type]; }
 
 	/*
 	int getId(int type);
 	int getHandle(int id);
-	int getZbuffer(int id);
+	int getZindex(int id);
 	*/
 
 private:
 	UniqueGraphicManager();
 	~UniqueGraphicManager();
 
-	void push(std::string address, int Zbuffer);
+	void push(std::string address, int Zindex);
 
 	std::vector<UniqueGraphic> uniqueGraphics;
 };

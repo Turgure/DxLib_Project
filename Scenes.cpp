@@ -25,19 +25,16 @@ void SceneA::update(){
 void SceneA::terminate(){}
 
 shared_ptr<CharaA> SceneA::createCharaA(double x, double y){
-	shared_ptr<CharaA> ca( new CharaA() );
-	if(ca){
-		ca->position.set(x, y);
-		Graphic sprite = UniqueGraphicManager::getInstance().getUniqueGraphic(UniqueGraphicManager::getInstance().CHARA1);
-		ca->graphic = sprite;
+	//shared_ptr<CharaA> ca( new CharaA() );
+	auto ca = make_shared<CharaA>();
+	ca->position.set(x, y);
+	Graphic sprite = UniqueGraphicManager::getInstance().getUniqueGraphic(UniqueGraphicManager::getInstance().CHARA1);
+	ca->graphic = sprite;
 		
-		Mover::getInstance().add(ca);
-		GraphicManager::getInstance().resister(ca);
+	Mover::getInstance().add(ca);
+	GraphicManager::getInstance().resister(ca);
 		
-		return ca;
-	}
-
-	return nullptr;
+	return ca;
 }
 shared_ptr<CharaB> SceneA::createCharaB(double x, double y){
 	shared_ptr<CharaB> cb( new CharaB() );
