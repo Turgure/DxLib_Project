@@ -52,7 +52,7 @@ bool BaseScene::processLoop(){
 	if(ClearDrawScreen() != 0) return false;	//画面クリア処理がエラーのとき
 	clsDx();
 
-	if(CheckHitKey(KEY_INPUT_ESCAPE)) return false;	//ESCキーを押したら終了
+	if(Input::getInstance().pushed(KEY_INPUT_ESCAPE)) return false;	//ESCキーを押したら終了
 
 	return true;
 }

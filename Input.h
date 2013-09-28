@@ -2,9 +2,9 @@
 
 class Input{
 public:
-	static Input getInstance(){
-		static Input ins;
-		return ins;
+	static Input& getInstance(){
+		static Input instance;
+		return instance;
 	}
 
 	void initialize();

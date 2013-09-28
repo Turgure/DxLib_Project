@@ -9,9 +9,10 @@ private:
 	void update() override;
 	void terminate() override;
 
-
+	void createObjects();
 
 	std::vector<std::shared_ptr<Object>> objects;
+	Object player;
 };
 
 class SceneB : public BaseScene{
