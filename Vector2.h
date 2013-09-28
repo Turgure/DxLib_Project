@@ -11,10 +11,6 @@ public:
 	Vector2(const Vector2& v):x(v.x), y(v.y){};
 	Vector2(double x, double y):x(x), y(y){};
 
-	//À•W
-	double getX(){ return x; }
-	double getY(){ return y; }
-
 	//‘ã“ü
 	Vector2& operator=(const Vector2& v){
 		x = v.x;
@@ -54,4 +50,13 @@ public:
 		y -= v.y;
 		return *this;
 	}
+	
+	//À•W
+	void setX(double x){ this->x = x; }
+	void setY(double y){ this->y = y; }
+	double getX(){ return x; }
+	double getY(){ return y; }
+
+	void set(double x, double y){ this->x = x; this->y = y; }
+	Vector2& get(){ return *this; }
 };

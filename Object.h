@@ -4,7 +4,7 @@
 
 class Object{
 public:
-	Object(Vector2 position, Graphic graphic):position(position), graphic(graphic){
+	Object(){
 		is_exist = true;
 	}
 	virtual ~Object(){}
@@ -22,31 +22,31 @@ protected:
 	int graphicId;
 };
 
-class ObjectFactory{
-public:
-	template<class T>
-	void add(Vector2 position, Graphic graphic);
-};
-
 class Charactor : public Object{
+//protected:
 public:
-	Charactor(Vector2 position, Graphic graphic):Object(position, graphic){}
-	virtual void update() override;
+	struct Status{
+		Status(int hp, int str, int def):hp(hp), str(str), def(def){}
+		int hp;
+		int str;
+		int def;
+	} status;
 
-protected:
-	int hp;
+public:
+	Charactor():status(1,0,0){}
+	virtual void update() override;
 };
 
 class CharaA : public Charactor{
 public:
-	CharaA(Vector2 position, Graphic graphic, int hp);
+	CharaA();
 	void initialize();
 	void update() override;
 };
 
 class CharaB : public Charactor{
 public:
-	CharaB(Vector2 position, Graphic graphic, int hp);
+	CharaB();
 	void initialize(int pattern);
 	void update() override;
 

@@ -12,7 +12,7 @@ typedef int graphic_handle;
 
 /* 
  * グラフィック登録クラス
- * 登録時のみに使用
+ * プログラム起動時に登録
  */
 class UniqueGraphic : public Component{
 public:

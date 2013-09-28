@@ -10,7 +10,8 @@ private:
 	void update() override;
 	void terminate() override;
 
-	ObjectFactory obj_factory;
+	std::shared_ptr<CharaA> createCharaA(double x, double y);	//enemy	//‚·‚Ä[‚¶‚µ[‚ñ‚Ö‚Á‚¾[‚ÉÚ×‚ ‚è
+	std::shared_ptr<CharaB> createCharaB(double x, double y);	//bullet
 };
 
 class SceneB : public BaseScene{
