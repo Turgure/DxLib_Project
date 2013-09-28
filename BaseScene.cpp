@@ -20,13 +20,13 @@ BaseScene* BaseScene::main() {
 
 	// メインループ
 	while(looping){
-		//GraphicManager::getInstance().update();	//TODO: graphicのuppdateとは
+		//SpriteManager::getInstance().update();	//TODO: graphicのuppdateとは
 		Input::getInstance().update();
 		Sound::getInstance().update();
 
 		if(processLoop()){
 			update();
-			GraphicManager::getInstance().draw();
+			SpriteManager::getInstance().draw();
 		}else{
 			// エラー時中断
 			terminate();

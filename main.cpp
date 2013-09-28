@@ -9,7 +9,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	SetGraphMode(640, 480, 32);
-	SetMainWindowText("GraphicManager test");
+	SetMainWindowText("SpriteManager test");
 
 	SceneManager::run(new SceneA);
 

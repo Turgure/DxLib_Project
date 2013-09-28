@@ -1,9 +1,14 @@
 #pragma once
-#include<string>
+
+class Object;
 
 class Component abstract{
+friend class Object;
 public:
 	virtual ~Component(){}
 	virtual void update(){}
-	virtual const std::string getKeyString() const = 0;
+	virtual const std::string& getKeyString() const = 0;
+	Object* getObject(){ return object; }
+private:
+	Object* object;
 };

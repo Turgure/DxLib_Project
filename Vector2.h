@@ -2,7 +2,7 @@
 #include <cmath>
 #include "Component.h"
 
-class Vector2 : public Component{
+class Vector2 {
 private:
 	double x, y;
 
@@ -10,6 +10,7 @@ public:
 	Vector2():x(0),y(0){};
 	Vector2(const Vector2& v):x(v.x), y(v.y){};
 	Vector2(double x, double y):x(x), y(y){};
+
 
 	//‘ã“ü
 	Vector2& operator=(const Vector2& v){
