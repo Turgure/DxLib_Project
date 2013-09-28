@@ -3,8 +3,9 @@
 class Object;
 
 class Component abstract{
-friend class Object;
+	friend class Object;
 public:
+	Component():object(nullptr){}
 	virtual ~Component(){}
 	virtual void update(){}
 	virtual const std::string& getKeyString() const = 0;

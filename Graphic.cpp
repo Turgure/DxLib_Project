@@ -17,27 +17,24 @@ Graphic::~Graphic(){
 
 GraphicManager::GraphicManager(){
 	push("data/image/eirin.jpg");	//TODO: csvで管理。ファイル名、Zindex、ハッシュの登録
-	push("data/image/eirin.jpg");
 	push("data/image/youmu.jpg");
-}
-
-void GraphicManager::push(const string& path){
-	Graphics[path] = make_shared<Graphic>(LoadGraph(path.c_str()));
 }
 
 void SpriteManager::update(){
 }
 
 void SpriteManager::draw(){
-	typedef std::shared_ptr<Sprite> Spr;
-	std::stable_sort(begin(sprites), end(sprites), [](const Spr& s1, const Spr& s2){ return s1->getZIndex() < s2->getZIndex(); });
+	typedef std::weak_ptr<Sprite> Spr;
+	//無効になったスプライトを削除する。定石
+	sprites.erase(std::remove_if(begin(sprites), end(sprites), [](const Spr& spr){ return spr.expired(); }), sprites.end());
+	//安定ソート
+	std::stable_sort(begin(sprites), end(sprites), [](const Spr& s1, const Spr& s2){ return s1.lock()->getZIndex() < s2.lock()->getZIndex(); });
 	for(auto& sprite : sprites){
-		// FIXME Vector2 is not component.
-		auto position = sprite->getObject()->getComponentAs<Transform>("Transform");
+		auto position = sprite.lock()->getObject()->getComponentAs<Transform>("Transform");
 		if(position){
-			DrawGraph((int)position->getX(), (int)position->getY(), sprite->getGraph()->getHandle(), true);
-			DrawFormatString((int)position->getX(), (int)position->getY()+10, GetColor(0,0,0), "%d", sprite->getZIndex()); 
+			DrawGraph((int)position->getX(), (int)position->getY(), sprite.lock()->getGraph()->getHandle(), true);
+			DrawFormatString((int)position->getX(), (int)position->getY()+10, GetColor(0,0,0), "%d", sprite.lock()->getZIndex()); 
 		}
 	}
-	ScreenFlip();
+	DxLib::ScreenFlip();
 }

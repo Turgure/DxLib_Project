@@ -1,5 +1,4 @@
 #pragma once
-
 #include <string>
 #include <vector>
 #include <memory>
@@ -8,6 +7,9 @@
 
 typedef int DxGraphicHandle;
 
+/*
+ * Unique(唯一)の画像を管理するクラス
+ */
 class Graphic{
 public:
 	Graphic(DxGraphicHandle handle);
@@ -28,26 +30,13 @@ public:
 		static GraphicManager instance;
 		return instance;
 	}
-	std::shared_ptr<Graphic> getGraphic(const std::string& name){ return Graphics[name]; }
+	std::shared_ptr<Graphic> getGraphic(const std::string& name){ return graphics[name]; }
 private:
 	GraphicManager();
-	void push(const std::string& path);
-	std::unordered_map<std::string, std::shared_ptr<Graphic>> Graphics;
-};
-
-class Sprite : public Component {
-public:
-	void setZIndex(int zIndex){ this->zIndex = zIndex; }
-	int getZIndex() const{ return zIndex; }
-	virtual const std::string& getKeyString() const override {
-		static std::string key = "Graphic";
-		return key;
+	void push(const std::string& path){
+		graphics[path] = std::make_shared<Graphic>(LoadGraph(path.c_str()));
 	}
-	void setGraph(std::shared_ptr<Graphic> graph){ this->graph = graph; }
-	std::shared_ptr<Graphic> getGraph(){ return graph; }
-private:
-	std::shared_ptr<Graphic> graph;
-	int zIndex;
+	std::unordered_map<std::string, std::shared_ptr<Graphic>> graphics;
 };
 
 /*
@@ -55,18 +44,51 @@ private:
  * 複数の同一画像も扱う
  * 更新、描写を行う
  */
+class Sprite;
 class SpriteManager {
 public:
 	static SpriteManager& getInstance(){
 		static SpriteManager instance;
 		return instance;
 	}
-	void addSprite(std::shared_ptr<Sprite> sprite){
+	void addSprite(std::shared_ptr<Sprite>& sprite){
 		sprites.push_back(sprite);
 	}
 	void update();
 	void draw();
 private:
 	SpriteManager(){}
-	std::vector<std::shared_ptr<Sprite>> sprites;
+	~SpriteManager(){}
+	std::vector<std::weak_ptr<Sprite>> sprites;
+};
+
+/*
+ * グラフィッククラスのコンポーネント
+ * ゲームオブジェクトが所有する
+ */
+class Sprite : public Component{
+public:
+	virtual const std::string& getKeyString() const override {
+		static std::string key = "Graphic";
+		return key;
+	}
+	void set(std::shared_ptr<Graphic> graph, int zIndex = -1){
+		this->graph = graph;
+		this->zIndex = zIndex;
+	}
+
+	static std::shared_ptr<Sprite> create(){
+		auto sprite = std::make_shared<Sprite>();
+		SpriteManager::getInstance().addSprite(sprite);
+		return sprite;
+	}
+	/*
+	void setZIndex(int zIndex){ this->zIndex = zIndex; }
+	void setGraph(std::shared_ptr<Graphic> graph){ this->graph = graph; }
+	*/
+	std::shared_ptr<Graphic> getGraph(){ return graph; }
+	int getZIndex() const{ return zIndex; }
+private:
+	std::shared_ptr<Graphic> graph;
+	int zIndex;	//値が大きいほど手前に表示される
 };

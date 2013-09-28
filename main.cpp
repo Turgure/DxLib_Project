@@ -11,7 +11,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(640, 480, 32);
 	SetMainWindowText("SpriteManager test");
 
-	SceneManager::run(new SceneA);
+	SceneManager::run(std::make_shared<SceneA>());
 
 	DxLib_End();
 	return 0;

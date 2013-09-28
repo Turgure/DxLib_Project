@@ -2,8 +2,6 @@
 #include <string>
 #include <unordered_map>
 #include "Component.h"
-#include "Vector2.h"
-#include "Graphic.h"
 
 class Object{
 public:
@@ -24,7 +22,11 @@ public:
 
 	std::shared_ptr<Component> getComponent(std::string key){
 		auto com = components.find(key);
-		return com != components.end() ? com->second : std::shared_ptr<Component>(nullptr);
+		//return com != components.end() ? com->second : std::shared_ptr<Component>();
+		if(com != components.end())
+			return com->second;
+		else
+			return std::shared_ptr<Component>();
 	}
 
 	template<class T>
