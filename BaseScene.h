@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "Graphic.h"
 
 /* 
@@ -16,17 +17,17 @@ protected:
 	virtual void start(){}     ///< @brief 起動処理
 	virtual void update(){}    ///< @brief フレーム更新
 	virtual void terminate(){} ///< @brief 終了処理
-	void setNextScene(BaseScene* scene);
+	void setNextScene(std::shared_ptr<BaseScene> scene);
 
 private:
 	BaseScene(const BaseScene&);
 	BaseScene operator=(const BaseScene&);
-	BaseScene* main(); ///< シーン実行
+	std::shared_ptr<BaseScene> main(); ///< シーン実行
 	bool processLoop();
 
 	static bool running;
 	bool looping; ///< @brief ループ中フラグ @detail ループ中フラグ。falseの状態でupdate()を抜けるとシーンが終了する。
-	BaseScene* next_scene;
+	std::shared_ptr<BaseScene> next_scene;
 };
 
 
@@ -36,9 +37,9 @@ private:
  */
 class SceneManager{
 public:
-	static void run(BaseScene* starter = nullptr);
+	static void run(std::shared_ptr<BaseScene> starter);
 
 private:
 	static bool running; ///< 実行中フラグ　
-	static BaseScene* current;
+	static std::shared_ptr<BaseScene> current;
 };

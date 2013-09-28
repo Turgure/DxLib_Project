@@ -8,11 +8,11 @@ bool BaseScene::running = false;
 
 BaseScene::BaseScene():next_scene(0), looping(false){}
 
-BaseScene* BaseScene::main() {
+std::shared_ptr<BaseScene> BaseScene::main() {
 	// 1度に実行できるシーンは1つ
-	if(running) return nullptr;
+	if(running) return std::shared_ptr<BaseScene>();
 	running = true;
-	next_scene = nullptr;
+	next_scene;
 
 	// ループ前処理
 	start();
@@ -31,7 +31,7 @@ BaseScene* BaseScene::main() {
 			// エラー時中断
 			terminate();
 			running = false;
-			return next_scene = nullptr;
+			return std::shared_ptr<BaseScene>();
 		}
 	}
 
@@ -42,7 +42,7 @@ BaseScene* BaseScene::main() {
 	return next_scene;
 }
 
-void BaseScene::setNextScene(BaseScene* scene){
+void BaseScene::setNextScene(std::shared_ptr<BaseScene> scene){
 	next_scene = scene;
 	looping = false;
 }
@@ -60,20 +60,19 @@ bool BaseScene::processLoop(){
 
 
 bool SceneManager::running = false;
-BaseScene* SceneManager::current;
+std::shared_ptr<BaseScene> SceneManager::current;
 
-void SceneManager::run(BaseScene *starter){
+void SceneManager::run(std::shared_ptr<BaseScene> starter){
 	if(running || !starter) return;
 	running = true;
 
 	// 開始シーンをセット
-	BaseScene* next = nullptr;
+	std::shared_ptr<BaseScene> next;
 	current = starter;
 
 	// メインループ開始
 	do{
 		next = current->main();
-		delete current;
 	}while(current = next);
 
 	running = false;
