@@ -1,30 +1,18 @@
 #include "DxLib.h"
 #include "Scenes.h"
 #include "Graphic.h"
-#include "Object.h"
+#include "Mover.h"
 using namespace std;
 
 void SceneA::start(){
-	for(int i = 0; i < 5; ++i){
-		//
-		shared_ptr<CharaA> ca( new CharaA( Vector2(i*20,  0), UniqueGraphicManager::getInstance().getUniqueGraphic(UniqueGraphicManager::getInstance().CHARA1) ) );
-		//cas.push_back(ca);
-		GraphicManager::getInstance().resister(ca);	//TODO: ˆêŠ‡‚Å‚Ü‚Æ‚ß‚é
-		mover.add(ca);
+	obj_factory.add<CharaA>( Vector2(20, 0), UniqueGraphicManager::getInstance().getUniqueGraphic(UniqueGraphicManager::getInstance().CHARA1), 1 );
 
-		shared_ptr<CharaB> cb( new CharaB(Vector2(i*20, 20), UniqueGraphicManager::getInstance().getUniqueGraphic(UniqueGraphicManager::getInstance().CHARA2) ) );
-		//cbs.push_back(cb);
-		GraphicManager::getInstance().resister(cb);
-		mover.add(cb);
-	}
-
-	//enemies.push_back(cas);
-	//enemies.push_back(cbs);
+	shared_ptr<CharaB> cb( new CharaB(Vector2(40, 20), UniqueGraphicManager::getInstance().getUniqueGraphic(UniqueGraphicManager::getInstance().CHARA2), 1) );
+	GraphicManager::getInstance().resister(cb);
+	Mover::getInstance().add(cb);
 }
 void SceneA::update(){
-	mover.update();
-	//cas[2]->update();
-	//cbs[3]->update();
+	Mover::getInstance().update();
 }
 void SceneA::terminate(){}
 

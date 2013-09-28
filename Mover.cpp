@@ -2,17 +2,18 @@
 
 void Mover::update(){
 	for(auto i = movers.begin(); i != movers.end();){
-		/*
-		if((**i).isOvered()){
+		
+		if(!(**i).isExist()){
+			/*
 			(**i).onRemove(*this);
 			if(movers.empty()){ // onRemove“à‚ÅclearMover‚³‚ê‚½ê‡‚Ì‘Îˆ
 				return;
 			}
-			delete *i;
+			*/
+			delete &i;	//TODO:
 			i = movers.erase(i);
 			continue;
 		}
-		*/
 		
 		(**i).update();
 		++i;
