@@ -43,6 +43,7 @@ Debug/
 Log.txt
 
 # User-specific files
+*.sdf
 *.suo
 *.user
 *.sln.docstates
