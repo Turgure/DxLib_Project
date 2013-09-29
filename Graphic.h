@@ -1,83 +1,28 @@
 #pragma once
-
 #include <string>
-#include <list>
 #include <vector>
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
 #include "Component.h"
-#include "Vector2.h"
 
-typedef int graphic_handle;
+typedef int DxGraphicHandle;
 
-/* 
- * グラフィック登録クラス
- * 登録時のみに使用
+/*
+ * Unique(唯一)の画像を管理するクラス
  */
-class UniqueGraphic : public Component{
+class Graphic{
 public:
-	UniqueGraphic(graphic_handle handle, int Zbuffer);
-	UniqueGraphic(){}
-	virtual ~UniqueGraphic(){}
-
-	int getId(){ return id; }
-	graphic_handle getHandle(){ return handle; }
-	int getZbuffer(){ return Zbuffer; }
-
+	Graphic(DxGraphicHandle handle);
+	Graphic();
+	virtual ~Graphic();
+	DxGraphicHandle getHandle(){ return handle; }
 protected:
-	int id;
-	graphic_handle handle;
-	int Zbuffer;
+	DxGraphicHandle handle;
 };
 
 /*
  * グラフィック管理クラス
  * グラフィック一覧を配列で管理
- */
-class Object;
-class UniqueGraphicManager{
-public:
-	static UniqueGraphicManager& getInstance(){
-		static UniqueGraphicManager instance;
-		return instance;
-	}
-
-	enum GraphicType{
-		BACKGROUND,
-		CHARA1,
-		CHARA2,
-		BULLET,
-	};
-
-	int getMaxZbuffer();
-
-	UniqueGraphic getUniqueGraphic(GraphicType type){ return uniqueGraphics[type]; }
-
-	/*
-	int getId(int type);
-	int getHandle(int id);
-	int getZbuffer(int id);
-	*/
-
-private:
-	UniqueGraphicManager();
-	~UniqueGraphicManager();
-
-	void push(std::string address, int Zbuffer);
-
-	std::vector<UniqueGraphic> uniqueGraphics;
-};
-
-/*
- * グラフィッククラス
- * UniqueGraphicと同じ機能
- */
-//class Graphic : public UniqueGraphic{};
-
-/*
- * 画像管理クラス
- * 複数の同一画像も扱う
- * 更新、描写を行う
  */
 class GraphicManager{
 public:
@@ -85,16 +30,65 @@ public:
 		static GraphicManager instance;
 		return instance;
 	}
-
-	void resister(std::shared_ptr<Object> obj);
-	void update();
-	void draw();
-
+	std::shared_ptr<Graphic> getGraphic(const std::string& name){ return graphics[name]; }
 private:
-	GraphicManager(){}
-
-	//list<map<int id, Vector2 pos>>
-	std::list<std::shared_ptr<Object>> graphics;
+	GraphicManager();
+	void push(const std::string& path){
+		graphics[path] = std::make_shared<Graphic>(LoadGraph(path.c_str()));
+	}
+	std::unordered_map<std::string, std::shared_ptr<Graphic>> graphics;
 };
 
-typedef UniqueGraphic Graphic;
+/*
+ * 画像管理クラス
+ * 複数の同一画像も扱う
+ * 更新、描写を行う
+ */
+class Sprite;
+class SpriteManager {
+public:
+	static SpriteManager& getInstance(){
+		static SpriteManager instance;
+		return instance;
+	}
+	void addSprite(std::shared_ptr<Sprite>& sprite){
+		sprites.push_back(sprite);
+	}
+	void update();
+	void draw();
+private:
+	SpriteManager(){}
+	~SpriteManager(){}
+	std::vector<std::weak_ptr<Sprite>> sprites;
+};
+
+/*
+ * グラフィッククラスのコンポーネント
+ * ゲームオブジェクトが所有する
+ */
+class Sprite : public Component{
+public:
+	virtual const std::string& getKeyString() const override {
+		static std::string key = "Graphic";
+		return key;
+	}
+	void set(std::shared_ptr<Graphic> graph, int zIndex = -1){
+		this->graph = graph;
+		this->zIndex = zIndex;
+	}
+
+	static std::shared_ptr<Sprite> create(){
+		auto sprite = std::make_shared<Sprite>();
+		SpriteManager::getInstance().addSprite(sprite);
+		return sprite;
+	}
+	/*
+	void setZIndex(int zIndex){ this->zIndex = zIndex; }
+	void setGraph(std::shared_ptr<Graphic> graph){ this->graph = graph; }
+	*/
+	std::shared_ptr<Graphic> getGraph(){ return graph; }
+	int getZIndex() const{ return zIndex; }
+private:
+	std::shared_ptr<Graphic> graph;
+	int zIndex;	//値が大きいほど手前に表示される
+};

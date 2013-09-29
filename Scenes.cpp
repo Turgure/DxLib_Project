@@ -1,32 +1,51 @@
 #include "DxLib.h"
 #include "Scenes.h"
 #include "Graphic.h"
-#include "Object.h"
+#include "Transform.h"
+#include "Controller.h"
 using namespace std;
 
 void SceneA::start(){
-	for(int i = 0; i < 5; ++i){
-		//
-		shared_ptr<CharaA> ca( new CharaA( Vector2(i*20,  0), UniqueGraphicManager::getInstance().getUniqueGraphic(UniqueGraphicManager::getInstance().CHARA1) ) );
-		//cas.push_back(ca);
-		GraphicManager::getInstance().resister(ca);	//TODO: àÍäáÇ≈Ç‹Ç∆ÇﬂÇÈ
-		mover.add(ca);
+	//createObjects();
 
-		shared_ptr<CharaB> cb( new CharaB(Vector2(i*20, 20), UniqueGraphicManager::getInstance().getUniqueGraphic(UniqueGraphicManager::getInstance().CHARA2) ) );
-		//cbs.push_back(cb);
-		GraphicManager::getInstance().resister(cb);
-		mover.add(cb);
-	}
-
-	//enemies.push_back(cas);
-	//enemies.push_back(cbs);
+	auto transform = make_shared<Transform>();
+	auto sprite = Sprite::create();
+	auto input = make_shared<Controller>();
+	transform->set(0, 100);
+	sprite->set(GraphicManager::getInstance().getGraphic("data/image/youmu.jpg"), 3);
+	player.addComponent(transform);
+	player.addComponent(sprite);
+	player.addComponent(input);
 }
 void SceneA::update(){
-	mover.update();
-	//cas[2]->update();
-	//cbs[3]->update();
+	for(auto& obj : objects){
+		obj->update();
+	}
+
+	player.update();
 }
 void SceneA::terminate(){}
+
+void SceneA::createObjects(){
+	for(int i = 0; i < 10; ++i){
+		auto obj = make_shared<Object>();
+		auto transform = make_shared<Transform>();
+		auto sprite = Sprite::create();
+		
+		transform->set(i*20, i*5);
+		if(i < 5){
+			sprite->set(GraphicManager::getInstance().getGraphic("data/image/youmu.jpg"), 1);
+		} else {
+			sprite->set(GraphicManager::getInstance().getGraphic("data/image/eirin.jpg"), 2);
+		}
+
+		obj->addComponent(transform);
+		obj->addComponent(sprite);
+
+		objects.push_back(obj);
+	}
+}
+
 
 //TODO: ÉVÅ[ÉìëJà⁄
 void SceneB::start(){}
