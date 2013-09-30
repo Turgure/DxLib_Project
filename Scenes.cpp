@@ -6,8 +6,22 @@
 using namespace std;
 
 void SceneA::start(){
-	//createObjects();
+	createPlayer();
+	createObjects();
+}
+void SceneA::update(){
+	for(auto& obj : objects){
+		obj->update();
+	}
 
+	player.update();
+	//map.update();
+}
+
+void SceneA::terminate(){
+}
+
+void SceneA::createPlayer(){
 	auto transform = make_shared<Transform>();
 	auto sprite = Sprite::create();
 	auto input = make_shared<Controller>();
@@ -17,14 +31,6 @@ void SceneA::start(){
 	player.addComponent(sprite);
 	player.addComponent(input);
 }
-void SceneA::update(){
-	for(auto& obj : objects){
-		obj->update();
-	}
-
-	player.update();
-}
-void SceneA::terminate(){}
 
 void SceneA::createObjects(){
 	for(int i = 0; i < 10; ++i){
@@ -34,9 +40,9 @@ void SceneA::createObjects(){
 		
 		transform->set(i*20, i*5);
 		if(i < 5){
-			sprite->set(GraphicManager::getInstance().getGraphic("data/image/youmu.jpg"), 1);
+			sprite->set(GraphicManager::getInstance().getGraphic("data/image/youmu.jpg"), 2);
 		} else {
-			sprite->set(GraphicManager::getInstance().getGraphic("data/image/eirin.jpg"), 2);
+			sprite->set(GraphicManager::getInstance().getGraphic("data/image/eirin.jpg"), 1);
 		}
 
 		obj->addComponent(transform);

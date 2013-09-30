@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <unordered_map>
+#include "DxLib.h"
 #include "Component.h"
 
 typedef int DxGraphicHandle;

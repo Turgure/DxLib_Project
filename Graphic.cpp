@@ -16,8 +16,11 @@ Graphic::~Graphic(){
 }
 
 GraphicManager::GraphicManager(){
-	push("data/image/eirin.jpg");	//TODO: csvで管理。ファイル名、Zindex、ハッシュの登録
+	push("data/image/eirin.jpg");	//TODO: csvで管理。ファイル名、ハッシュの登録
 	push("data/image/youmu.jpg");
+
+	push("data/image/chip1.jpg");
+	push("data/image/chip2.jpg");
 }
 
 void SpriteManager::update(){
