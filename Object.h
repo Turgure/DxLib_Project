@@ -23,11 +23,7 @@ public:
 
 	std::shared_ptr<Component> getComponent(std::string key){
 		auto com = components.find(key);
-		//return com != components.end() ? com->second : std::shared_ptr<Component>();
-		if(com != components.end())
-			return com->second;
-		else
-			return std::shared_ptr<Component>();
+		return com != components.end() ? com->second : std::shared_ptr<Component>();
 	}
 
 	template<class T>

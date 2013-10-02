@@ -6,7 +6,7 @@
 using namespace std;
 
 void SceneA::start(){
-	createPlayer();
+	//createPlayer();
 	createObjects();
 }
 void SceneA::update(){

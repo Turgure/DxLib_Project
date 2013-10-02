@@ -41,7 +41,7 @@ int Map::mapdata[2][15][20] = {
 };
 
 Map::Map(){
-	for(int num = 0; num < 2; ++num){
+	for(int num = 0; num < 1/*2*/; ++num){
 		for(int h = 0; h < 15; ++h){
 			for(int w = 0; w < 20; ++w){
 				auto obj = make_shared<Object>();

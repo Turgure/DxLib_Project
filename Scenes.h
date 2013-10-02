@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "BaseScene.h"
-#include "Object.h"
+#include "Player.h"
 #include "Map.h"
 
 class SceneA : public BaseScene{
@@ -14,7 +14,7 @@ private:
 	void createObjects();
 
 	std::vector<std::shared_ptr<Object>> objects;
-	Object player;
+	Player player;
 	Map map;
 };
 
