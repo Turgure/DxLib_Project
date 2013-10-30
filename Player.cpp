@@ -17,8 +17,4 @@ Player::Player(){
 
 void Player::update(){
 	Object::update();
-
-	if(getComponentAs<Transform>("Transform")->getX() > 640){
-		getComponentAs<Transform>("Transform")->setX(0);
-	}
 }

@@ -15,7 +15,7 @@ void SceneA::update(){
 	}
 
 	player.update();
-	//map.update();
+	map.update(player);
 }
 
 void SceneA::terminate(){
